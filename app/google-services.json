@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "615839019973",
+    "firebase_url": "https://eventosincubadora.firebaseio.com",
+    "project_id": "eventosincubadora",
+    "storage_bucket": "eventosincubadora.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:615839019973:android:74dec0168220a78c",
+        "android_client_info": {
+          "package_name": "com.example.desarrollo.eventosincuabadora"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "615839019973-277720b6llu3ofbe3mfq113tjbnjiuv4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmIUm6YczNZKpPtZVfzQu1x99gyJKO8-k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

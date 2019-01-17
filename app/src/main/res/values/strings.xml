@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">EventosIncuabadora</string>
+    <string name="RegistrateCorreo">Correo</string>
+    <string name="RegistratePassword">Contraseña</string>
+    <string name="RegistrateCPassword">Confirmar Contraseña</string>
+    <string name="RegistrateOk">REGISTRAR</string>
+    <string name="LoginCorreo">Correo</string>
+    <string name="LoginPassword">Contraseña</string>
+    <string name="LoginOk">LOGIN</string>
+    <string name="LNotienesCuenta">No Tienes Cuenta?</string>
+    <string name="LRegistrateAqui">Registrate Aqui</string>
+    <string name="title_activity_tercera">TerceraActivity</string>
+</resources>
