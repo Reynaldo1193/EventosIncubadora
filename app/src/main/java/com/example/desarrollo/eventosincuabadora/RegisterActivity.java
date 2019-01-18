@@ -1,5 +1,6 @@
 package com.example.desarrollo.eventosincuabadora;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,13 +14,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private static final Pattern PASSWORDVALIDATION = Pattern.compile("^" + "(?=.*[0-9])" + "(?=.*[a-z])" + "(?=.*[A-Z])" + "(?=.*[a-zA-Z])" + ".{6,}" + "$");
-    private static final Pattern EMAILVALIDATION = Pattern.compile("[a-zA-Z0-9]{1,200}"+"\\@"+"[a-zA-Z0-9]{1,60}"+"\\."+"[a-zA-Z0-9]{1,25}");
+    private static final Pattern EMAILVALIDATION = Pattern.compile(".{1,250}"+"\\@"+"[a-zA-Z0-9]{1,60}"+"\\."+"[a-zA-Z0-9]{1,25}");
 
     private EditText userEmail,userPassword,userCPassword;
     private Button buttonRegistrar;
@@ -46,6 +48,20 @@ public class RegisterActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
                                 Toast.makeText(RegisterActivity.this, "The registration succeeded", Toast.LENGTH_SHORT).show();
+                                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+
+                                firebaseUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()){
+                                            Toast.makeText(RegisterActivity.this,"Se envio un email a tu correo, por favor verifica tu correo",Toast.LENGTH_SHORT).show();
+                                        }
+                                        else
+                                            Toast.makeText(RegisterActivity.this,"Hubo un problema al enviarte el correo de verificacion",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                Intent intent = new Intent(RegisterActivity.this ,LoginActivity.class);
+                                startActivity(intent);
                             }
                             else if (task.getException() instanceof FirebaseAuthUserCollisionException){
                                 Toast.makeText(RegisterActivity.this,"El usuario ya existe",Toast.LENGTH_SHORT).show();
@@ -56,8 +72,6 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     });
                 }
-
-                Toast.makeText(RegisterActivity.this,"Hello",Toast.LENGTH_SHORT).show();
 
             }
         });

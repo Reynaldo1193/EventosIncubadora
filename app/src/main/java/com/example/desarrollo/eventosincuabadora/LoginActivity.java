@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +23,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editTextLCorreo, editTextLPassword;
     private Button buttonLogin;
     private TextView textViewRegistrateAqui;
+    private TextView textViewEmailVerify;
     private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +33,20 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         setup();
 
-        /*FirebaseUser user = firebaseAuth.getCurrentUser();
-
-        if(user != null){
+        if(firebaseUser != null){
+            if (firebaseUser.isEmailVerified()){
+                Toast.makeText(LoginActivity.this,""+firebaseUser.getEmail(),Toast.LENGTH_SHORT).show();
+                finish();
+                startActivity(new Intent(LoginActivity.this,TerceraActivity.class));
+            }
+            else Toast.makeText(LoginActivity.this,"Your email.is not verify",Toast.LENGTH_SHORT).show();
+            firebaseAuth.signOut();
             finish();
-            startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
-        }*/
+            startActivity(new Intent(LoginActivity.this,LoginActivity.class));
+
+        }
+
+        else
 
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
@@ -47,12 +58,11 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(LoginActivity.this,"Login Succesfull", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this,"Login succesfull",Toast.LENGTH_SHORT);
                             finish();
                             startActivity(new Intent(LoginActivity.this,TerceraActivity.class));
-
-                        }else
-                            Toast.makeText(LoginActivity.this,"Login Failed", Toast.LENGTH_SHORT).show();
+                        }
+                        else Toast.makeText(LoginActivity.this,"Login Failed",Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -63,7 +73,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this,RegisterActivity.class);
                 startActivity(intent);
-
             }
         });
 
@@ -76,7 +85,9 @@ public class LoginActivity extends AppCompatActivity {
         editTextLPassword = (EditText)findViewById(R.id.editTextLPassword);
         buttonLogin = (Button)findViewById(R.id.buttonLogin);
         textViewRegistrateAqui = (TextView)findViewById(R.id.textViewRegistrateAqui);
+        textViewEmailVerify = (TextView)findViewById(R.id.textViewEmailVerify);
         firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
 
     }
 

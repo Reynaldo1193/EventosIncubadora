@@ -10,4 +10,6 @@
     <string name="LNotienesCuenta">No Tienes Cuenta?</string>
     <string name="LRegistrateAqui">Registrate Aqui</string>
     <string name="title_activity_tercera">TerceraActivity</string>
+    <string name="logoutMenu">Logout</string>
+    <string name="seeMore">See more</string>
 </resources>

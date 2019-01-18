@@ -8,4 +8,15 @@
     tools:context=".TerceraActivity"
     tools:showIn="@layout/activity_tercera">
 
+    <TextView
+        android:id="@+id/textViewEmailVerify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:text="TextView"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>
