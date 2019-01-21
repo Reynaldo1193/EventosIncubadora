@@ -99,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
             return false;
         }
         else if (!PASSWORDVALIDATION.matcher(contraseña).matches()){
-            Toast.makeText(RegisterActivity.this,"La contraseña es demasiado débil; debe ser de al menos 6 caracteres y contener al menos una mayuscula y un caracter especial",Toast.LENGTH_LONG).show();
+            Toast.makeText(RegisterActivity.this,"La contraseña es demasiado débil; debe ser de al menos 6 caracteres y contener al menos una mayuscula",Toast.LENGTH_LONG).show();
             return false;
         }
         else if (!contraseña.equals(confContraseña)){

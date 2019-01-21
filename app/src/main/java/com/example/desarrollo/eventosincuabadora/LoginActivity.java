@@ -18,7 +18,12 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.regex.Pattern;
+
 public class LoginActivity extends AppCompatActivity {
+
+    private static final Pattern PASSWORDVALIDATION = Pattern.compile("^" + "(?=.*[0-9])" + "(?=.*[a-z])" + "(?=.*[A-Z])" + "(?=.*[a-zA-Z])" + ".{6,}" + "$");
+    private static final Pattern EMAILVALIDATION = Pattern.compile(".{1,250}"+"\\@"+"[a-zA-Z0-9]{1,60}"+"\\."+"[a-zA-Z0-9]{1,25}");
 
     private EditText editTextLCorreo, editTextLPassword;
     private Button buttonLogin;
@@ -39,11 +44,12 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
                 startActivity(new Intent(LoginActivity.this,TerceraActivity.class));
             }
-            else Toast.makeText(LoginActivity.this,"Your email.is not verify",Toast.LENGTH_SHORT).show();
-            firebaseAuth.signOut();
-            finish();
-            startActivity(new Intent(LoginActivity.this,LoginActivity.class));
-
+            else {
+                Toast.makeText(LoginActivity.this,"Your email.is not verify",Toast.LENGTH_SHORT).show();
+                firebaseAuth.signOut();
+                finish();
+                startActivity(new Intent(LoginActivity.this,LoginActivity.class));
+            }
         }
 
         else
@@ -54,17 +60,24 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String correo = editTextLCorreo.getText().toString().trim();
                 String contraseña = editTextLPassword.getText().toString().trim();
-                firebaseAuth.signInWithEmailAndPassword(correo,contraseña).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(LoginActivity.this,"Login succesfull",Toast.LENGTH_SHORT);
-                            finish();
-                            startActivity(new Intent(LoginActivity.this,TerceraActivity.class));
+                if (validation(correo,contraseña)) {
+
+                    firebaseAuth.signInWithEmailAndPassword(correo,contraseña).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                Toast.makeText(LoginActivity.this,"Login succesfull",Toast.LENGTH_SHORT);
+                                finish();
+                                startActivity(new Intent(LoginActivity.this,TerceraActivity.class));
+                            }
+                            else Toast.makeText(LoginActivity.this,"Login Failed",Toast.LENGTH_SHORT).show();
                         }
-                        else Toast.makeText(LoginActivity.this,"Login Failed",Toast.LENGTH_SHORT).show();
-                    }
-                });
+                    });
+
+                }
+                else{
+                    Toast.makeText(LoginActivity.this,"Error",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -91,4 +104,23 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    private boolean validation(String correo, String contraseña){
+
+        if(correo.isEmpty() ||contraseña.isEmpty()){
+            Toast.makeText(LoginActivity.this,"Llene todos los campos",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(!EMAILVALIDATION.matcher(correo).matches()){
+            Toast.makeText(LoginActivity.this,"El correo es inválido",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else if (!PASSWORDVALIDATION.matcher(contraseña).matches()){
+            Toast.makeText(LoginActivity.this,"La contraseña es demasiado débil; debe ser de al menos 6 caracteres y contener al menos una mayuscula",Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else
+            return true;
+    }
+
 }
+
