@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView textViewEmailVerify;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
+    private Button buttonGoogleLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
         textViewEmailVerify = (TextView)findViewById(R.id.textViewEmailVerify);
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
+        buttonGoogleLogout = (Button) findViewById(R.id.buttonGoogleLogOut);
 
     }
 

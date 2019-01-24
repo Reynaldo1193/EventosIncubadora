@@ -12,4 +12,5 @@
     <string name="title_activity_tercera">TerceraActivity</string>
     <string name="logoutMenu">Logout</string>
     <string name="seeMore">See more</string>
+    <string name="default_web_id_client">231108868525-hfnuhuerva0chkuqc400qfhej3cle5uf.apps.googleusercontent.com</string>
 </resources>
