@@ -14,6 +14,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -22,6 +25,7 @@ public class TerceraActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
     private TextView textViewEmailVerify;
+    private GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +63,7 @@ public class TerceraActivity extends AppCompatActivity {
             case R.id.logout:
                 Toast.makeText(TerceraActivity.this,"Logout",Toast.LENGTH_SHORT).show();
                 firebaseAuth.signOut();
+                mGoogleSignInClient.signOut();
                 finish();
                 startActivity(new Intent(TerceraActivity.this,LoginActivity.class));
                 return true;
@@ -70,5 +75,10 @@ public class TerceraActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         textViewEmailVerify = (TextView) findViewById(R.id.textViewEmailVerify);
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_id_client))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this,gso);
     }
 }
